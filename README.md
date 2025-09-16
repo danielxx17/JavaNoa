@@ -1,69 +1,4 @@
-package controller;
-
-import model.Planta;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
-public class PlantaController {
-    private Planta planta;
-    private Scanner scanner;
-
-    public PlantaController() {
-        scanner = new Scanner(System.in);
-    }
-
-    public void cadastrarPlanta() {
-        System.out.print("Digite o nome da planta: ");
-        String nome = scanner.nextLine();
-
-        System.out.print("Digite o tipo de solo: ");
-        String solo = scanner.nextLine();
-
-        double agua = 0;
-        while (true) {
-            try {
-                System.out.print("Digite a quantidade de água (L): ");
-                agua = scanner.nextDouble();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Digite um número válido para a água.");
-                scanner.nextLine();
-            }
-        }
-
-        double crescimento = 0;
-        while (true) {
-            try {
-                System.out.print("Digite o crescimento estimado (cm): ");
-                crescimento = scanner.nextDouble();
-                break;
-            } catch (InputMismatchException ) {
-                System.out.println("Digite um número válido para o crescimento.");
-                scanner.nextLine();
-            }
-        }
-
-        planta = new Planta(nome, solo, agua, crescimento);
-        System.out.println("Planta cadastrada com sucesso!");
-    }
-
-    public void exibirPlanta() {
-        if (planta != null) {
-            System.out.println("\n=== DADOS DA PLANTA ===");
-            System.out.println("Nome: " + planta.getNome());
-            System.out.println("Tipo de Solo: " + planta.getTipoSolo());
-            System.out.println("Água (L): " + planta.getQuantidadeAgua());
-            System.out.println("Crescimento Estimado (cm): " + planta.getCrescimentoEstimado());
-            System.out.println("Impacto Calculado: " + planta.calcularImpacto());
-        } else {
-            System.out.println("Nenhuma planta cadastrada.");
-        }
-    }
-
-    public Planta getPlanta() { return planta; }
-    public void setPlanta(Planta planta) { this.planta = planta; }
-}
-
+Main
 
 package controller;
 
@@ -130,6 +65,8 @@ public class PlantaController {
     public Planta getPlanta() { return planta; }
     public void setPlanta(Planta planta) { this.planta = planta; }
 }
+Controller
+
 
 package controller;
 
@@ -195,9 +132,38 @@ public class PlantaController {
 
     public Planta getPlanta() { return planta; }
     public void setPlanta(Planta planta) { this.planta = planta; }
+
+    package Db;
+}
+DB
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class Db {
+
+    private static final String URL = "jdbc:postgresql://ep-shiny-morning-adho75ur-pooler.c-2.us-east-1.aws.neon.tech/neondb";
+    private static final String USER = "neondb_owner";
+    private static final String PASSWORD = "npg_rt9ewabTZ6Uc";
+    private static final String PARAMS = "?sslmode=require&channel_binding=require";
+
+    public static Connection getConnection() throws SQLException {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Driver PostgreSQL não encontrado!", e);
+        }
+
+        return DriverManager.getConnection(URL + PARAMS, USER, PASSWORD);
+    }
+
 }
 
 MODEL
+
+
 package model;
 
 public class Planta {
@@ -230,6 +196,8 @@ public class Planta {
     }
 }
 VIEW
+
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -357,7 +325,9 @@ public class PlantasFrontEnd extends Application {
         launch(args);
     }
 }
-VIEW continuacao
+VIEW 
+
+continuacao
 package view;
 
 import model.Planta;
